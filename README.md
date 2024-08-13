@@ -57,9 +57,18 @@ Once both virtual machines are created, we are going to change the Domain-Contro
 <br />
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+  
+![image](https://github.com/user-attachments/assets/c96699f2-52d0-48f3-b307-8a971b5721bd)
+![image](https://github.com/user-attachments/assets/d75c13fe-1ff3-4fbb-98ef-20f09c6601a1)
+![image](https://github.com/user-attachments/assets/d30022b8-6f44-4d52-bce5-46e71c0fc6ea)
+![image](https://github.com/user-attachments/assets/03c8686d-54b4-49f2-83e1-32e68e314383)
+
+
 </p>
 <p>
-Log in to the Client virtual machine with the username and password you created and ping the Domain-Controller to test connectivity. In Azure, find the Domain-Controller's private IP address in the network section and use the command ping -t to preform a perpetual ping. In this case, the command would be ping "10.0.0.5 -t". 
+Log in to the Client virtual machine with the username and password you created and ping the Domain-Controller to test connectivity. In Azure, find the Domain-Controller's private IP address in the network section and use the command ping -t to preform a perpetual ping. In this case, the command would be ping "10.0.0.5 -t". Once you ping the Domain-Controller, you will notice the request times out after every attempt. To fix this, we are going to log into the Domain-Controller with the username and password we created when making the virtual machine. Once logged in, type "wf.msc" in the search bar at the bottom to open Windows Defender Firewall with Advanced Security. Once opened, select Inbound Rules, filter the list by protocol, look for ICMPv$ protocols in the middle of the screen, and enable both Core Networking Diagnostics inbound rules. Once those two rules are enabled, go back to the Client virtual machine and see the ping succeed. 
 </p>
 <br />
+
+
+Next, we are going to install Active Directory Domain Services on the Domain-Controller. Open Server Manager in your Domain-Controller and click Add roles and features. Select role-based or feature based installation and click next, then check that your Domain-Controller and its private IP address is chosen for the destination server and click next. On the next page, select Active Directory Domain Services and add features. No need to change anything in the next 3 sections, just click next and then install. Once installed, click the notification icon on the top right corner of the screen and select Promote this server to a domain controller. Add a new forest name it "tutorialdomain.com". Create a password for the Directory Services Restore Mode password and click next, next, and on the following page, wait for your domain name to populate in The NetBIOS domain name section, then click next, next, and install. Once installed, the Domain-Controller virtual machine will log off automatically, and you'll have to log back in using the public IP address, username and password you created. 
