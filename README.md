@@ -72,3 +72,6 @@ Log in to the Client virtual machine with the username and password you created 
 
 
 Next, we are going to install Active Directory Domain Services on the Domain-Controller. Open Server Manager in your Domain-Controller and click Add roles and features. Select role-based or feature based installation and click next, then check that your Domain-Controller and its private IP address is chosen for the destination server and click next. On the next page, select Active Directory Domain Services and add features. No need to change anything in the next 3 sections, just click next and then install. Once installed, click the notification icon on the top right corner of the screen and select Promote this server to a domain controller. Add a new forest name it "tutorialdomain.com". Create a password for the Directory Services Restore Mode password and click next, next, and on the following page, wait for your domain name to populate in The NetBIOS domain name section, then click next, next, and install. Once installed, the Domain-Controller virtual machine will log off automatically, and you'll have to log back in using the public IP address, username and password you created. 
+
+
+Once logged back into Domain-Controller, open Server Manager, go to tools in the top right corner, and select users and computers. 
