@@ -70,8 +70,43 @@ Log in to the Client virtual machine with the username and password you created 
 </p>
 <br />
 
+![image](https://github.com/user-attachments/assets/9b299287-ee59-4e52-82d7-30adfb3d6e1b)
+![image](https://github.com/user-attachments/assets/02c60a43-b83d-4502-a64a-a3b9ad437357)
+![image](https://github.com/user-attachments/assets/b3ab14bb-247e-418a-8e34-5fa17aedbd4c)
+![image](https://github.com/user-attachments/assets/54e16b2d-01ff-4020-b7d2-b06b4d97e484)
+![image](https://github.com/user-attachments/assets/6aa015cb-58e1-4936-a76b-fa3afa21ba2d)
+
 
 Next, we are going to install Active Directory Domain Services on the Domain-Controller. Open Server Manager in your Domain-Controller and click Add roles and features. Select role-based or feature based installation and click next, then check that your Domain-Controller and its private IP address is chosen for the destination server and click next. On the next page, select Active Directory Domain Services and add features. No need to change anything in the next 3 sections, just click next and then install. Once installed, click the notification icon on the top right corner of the screen and select Promote this server to a domain controller. Add a new forest name it "tutorialdomain.com". Create a password for the Directory Services Restore Mode password and click next, next, and on the following page, wait for your domain name to populate in The NetBIOS domain name section, then click next, next, and install. Once installed, the Domain-Controller virtual machine will log off automatically, and you'll have to log back in using the public IP address, username and password you created. 
 
+![image](https://github.com/user-attachments/assets/6c165219-0e6c-42ea-9bbe-959bd0754efa)
+![image](https://github.com/user-attachments/assets/439277e4-86e3-430e-8cc9-9e5b7108740b)
+![image](https://github.com/user-attachments/assets/40e14396-a795-4bc8-b186-fad4b6966ba6)
 
-Once logged back into Domain-Controller, open Server Manager, go to tools in the top right corner, and select users and computers. 
+
+Next, we will be creating two organizational units. Once logged back into Domain-Controller, open Server Manager, go to tools in the top right corner, and select users and computers. In Active Directory Users and Computers, right click tutorialdomain.com and add a new organizational unit. We will add in 2 organizational units, one named Employees and one named Administrators. 
+
+
+![image](https://github.com/user-attachments/assets/010b65c1-9dd1-4eb7-a7e3-e4b252f40f7a)
+![image](https://github.com/user-attachments/assets/dc64bdd4-2f02-48ba-9dcb-1106e2c45231)
+![image](https://github.com/user-attachments/assets/b8732663-5958-42ea-8f19-5e707645c4a2)
+
+
+Next, we will create an administator. To do so, right click your newly created organizational unit for Administrators, click new, and select user. Name the user Jane Doe, and make her username Jane-Doe.b I recommend using an easy password for the tutorial. Once Jane is created, right click her account, select properties, and add her to the domain admins group. Log out of the Domain-Controller virtual machine and log back in as Jane Doe with the username and password you created. 
+
+![image](https://github.com/user-attachments/assets/75ae873c-1274-4ff6-bd66-af96037473ef)
+![image](https://github.com/user-attachments/assets/04e7e753-5f0d-47e5-980e-b6a9fb6a7c84)
+![image](https://github.com/user-attachments/assets/f8374a46-9475-4adf-ad9f-5fd320d36a2b)
+![image](https://github.com/user-attachments/assets/a35e13af-9e04-4010-b8e8-090ed1005b78)
+
+Next, we will configure DNS settings and join the domain. To do this, open the Client virtual machine in Azure, click network settings, and select Network interface / IP configuration. Under settings, click DNS server, change the setting to custom, enter the Domain-Controller's privat IP address under DNS server, and hit save, and restart your Client virtual machine. Log back in to your Client virtual machine, go to settings, about, rename this PC (advanced), and select change. Enter tutorialdomain.com under domain, and enter the username and password of Jane Doe to allow it permission to join the domain. The computer will restart itself to update the changes. In the Domain-Controller virtual machine, open Active Directory Users and Computers, drop down tutorialdomain.com, select computers, and notice how our Client virtual machine now shows. 
+
+![image](https://github.com/user-attachments/assets/a8ca0341-1ccc-4c29-8231-91920366b26c)
+![image](https://github.com/user-attachments/assets/983bab42-48ce-473b-a447-5efc9b2fbd36)
+
+
+Next, we will set up Remote Desktop for non-administrartive users for our Client virtual machine. Log in to the Client virtual machine as Jane Doe, open settings, select about, and select Remote Desktop. Click Select users that can remotely access this PC, click add, and add in domain users. Now you can log in to the Client virtual machine as a normal non-administrative user. 
+
+
+
+Lastly, we are going to create additional users and manage their accounts. Log into the Client virtual machine as Jane Doe, open Windows Powershell ISE as an administrator, and select new script on the top left corner. Copy and Paste the following code to have your computer create 1,000 random users - https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1. 
