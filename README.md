@@ -107,6 +107,16 @@ Next, we will configure DNS settings and join the domain. To do this, open the C
 
 Next, we will set up Remote Desktop for non-administrartive users for our Client virtual machine. Log in to the Client virtual machine as Jane Doe, open settings, select about, and select Remote Desktop. Click Select users that can remotely access this PC, click add, and add in domain users. Now you can log in to the Client virtual machine as a normal non-administrative user. 
 
+![image](https://github.com/user-attachments/assets/b9d40606-ca3f-40a5-b7b6-0f68b79e3aff)
 
 
-Lastly, we are going to create additional users and manage their accounts. Log into the Client virtual machine as Jane Doe, open Windows Powershell ISE as an administrator, and select new script on the top left corner. Copy and Paste the following code to have your computer create 1,000 random users - https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1. 
+Next, we are going to create additional users and manage their accounts. Log into the Domain-Controller virtual machine, open Windows Powershell ISE as an administrator, and select new script on the top left corner. Copy and Paste the following code and click run to have your computer create 10,000 random users - https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1. Go back to Active Directory Users and Computers, expand tutorialdomain.com and select Employees. You will notice users added in as employees. The code alternated vowels and consonance to make everyone's names, and set everyone's password to Password1.
+
+![image](https://github.com/user-attachments/assets/48bd6012-4166-4949-821e-619ace60b5ef)
+![image](https://github.com/user-attachments/assets/77b15089-903f-4e55-a05c-e77062357640)
+
+Lastly, we are going to log in to the Client virtual machine with a random user. I chose the user fon.win, and logged into the Client virtual machine using the password Password1. Let's imagine fon.win forgot their password and needs a password reset. Log out of your Client virtual machine and open your Domain-Controller virtual machine. Right click the user needing a password reset, in this case it's fon.win, make their new password Password2 and unlock their account if needed.  Log back into the Client virtual machine as your selected user with Password 2. 
+
+This concludes our Active Directory Tutorial!
+
+
